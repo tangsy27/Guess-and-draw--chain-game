@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>你画我猜接龙</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+  <div id="app" class="app-root">
+    <!-- 页面0（欢迎页）：进入&游戏规则 -->
+    <section id="view-welcome" class="view active">
+
+      <div class="welcome-bg"></div>
+      <div class="welcome-card">
+
+        <h1 class="game-title">你画我猜接龙</h1>
+
+        <div class="welcome-form">
+          <div class="form-row">
+            <label for="welcome-name">昵称</label>
+            <input id="welcome-name" placeholder="输入你的昵称" maxlength="16" />
+          </div>
+          <div class="form-row">
+            <label for="welcome-room">房间 ID</label>
+            <input id="welcome-room" placeholder="例如：1" maxlength="32" />
+          </div>
+          <button id="btn-enter-room" class="btn primary">进入房间</button>
+        </div>
+
+        <div class="rules-block">
+          <h2>游戏规则</h2>
+          <ol class="rules-list">
+            <li>所有玩家进入同一个房间，房主点击「开始游戏」。</li>
+            <li>第 0 步，每位玩家各自写一个起始词语。</li>
+            <li>之后轮流接龙：看到词就画画，看到画就写词。</li>
+            <li>每条接龙会在玩家之间轮转一圈，直到回到起点。</li>
+            <li>全部结束后，依次回放每条接龙，每个人对每条接龙投票：</li>
+            <li class="small">√ 代表整体意思传达成功，× 代表已经走偏。</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页面1(游戏页）：头部/左列任务区/右列玩家+聊天 -->
+    <section id="view-room" class="view">
+
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <img src="/static/logo.png" class="custom-logo" alt="游戏图标">
+          <div>
+            <div id="room-id-display" class="room-id-text">房间：</div>
+            <div id="self-name-display" class="self-name-text"></div>
+          </div>
+        </div>
+
+        <div class="top-bar-right">
+          <button id="btn-start-game" class="btn primary small">开始游戏</button>
+          <button id="btn-restart-game" class="btn secondary small">重新开局</button>
+        </div>
+      </header>
+
+      <main class="room-main">
+        <!-- 切换不同的面板（写词/画画/等待） -->
+        <div class="task-column">
+          <div id="task-panel" class="card task-card">
+            <h2 id="task-title">等待开始</h2>
+            <p id="task-desc" class="task-desc">
+              房主点击「开始游戏」后，会给你分配词语或画画任务。
+            </p>
+
+        <!--左 1.1写词 -->
+            <div id="word-panel" class="task-subpanel hidden">
+              <label for="word-input">请输入你想到的词语（不要告诉别人）</label>
+              <textarea
+                id="word-input"
+                class="word-input"
+                rows="3"
+                maxlength="30"
+                placeholder="例如：骑自行车的猫"
+              ></textarea>
+              <button id="btn-submit-word" class="btn primary wide">
+                提交词语
+              </button>
+            </div>
+
+        <!--左 1.2画画 -->
+            <div id="drawing-panel" class="task-subpanel hidden">
+              <div class="toolbar">
+                <div class="toolbar-group">
+                  <label>画笔颜色</label>
+                  <input type="color" id="colorPicker" value="#000000" />
+                  <label>粗细</label>
+                  <input type="range" id="sizeRange" min="2" max="18" value="6" />
+                  <button id="btn-eraser" class="btn ghost small">
+                    橡皮擦
+                  </button>
+                </div>
+                <div class="toolbar-group">
+                  <button id="btn-clear" class="btn ghost small">清空画布</button>
+                  <button id="btn-submit-drawing" class="btn primary small">
+                    提交本次画
+                  </button>
+                </div>
+              </div>
+              <div class="canvas-wrapper">
+                <div id="danmaku-layer" class="danmaku-layer"></div>
+                <canvas id="drawingCanvas"></canvas>     <!-- canvas通过 JS 的 2D API 绘制 -->
+              </div>
+            </div>
+
+        <!--左 1.3等待 -->
+            <div id="waiting-panel" class="task-subpanel">
+              <p>当前没有轮到你，请稍等其他玩家完成本轮任务。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右1.1：玩家列表  -->
+        <div class="side-column">
+          <div class="card player-card">
+            <div class="card-header-row">
+              <h3>玩家</h3>
+              <span id="room-status" class="status-pill">等待中</span>
+            </div>
+            <ul id="player-list" class="player-list"></ul>
+            <p class="hint-text">
+              提示：玩家列表第一个是房主，可以点击「开始游戏」。
+            </p>
+          </div>
+          
+         <!-- 右1.2：聊天系统  -->
+          <div id="chat-card" class="card chat-card">
+            <h3 id="chat-title">聊天（画画时消息只会以弹幕形式显示在画布上）</h3>
+            <div id="chat-messages" class="chat-messages"></div>
+            <div class="chat-input-row">
+              <input
+                id="chat-input"
+                class="chat-input"
+                placeholder="说点什么..."
+                maxlength="100"
+              />
+              <button id="btn-chat-send" class="btn primary small">
+                发送
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <!-- 页面2（回放页）：接龙回放 + 评判 -->
+    <section id="view-reveal" class="view">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <div class="logo-mini">终</div> <!-- 用一个简单的logo,清晰这是最终阶段-->
+          <div>
+            <div class="room-id-text">接龙回放 &amp; 评判</div>
+            <div id="reveal-progress" class="self-name-text"></div>
+          </div>
+        </div>
+        <div class="top-bar-right">
+          <button id="btn-back-to-room" class="btn secondary small">
+            返回房间
+          </button>
+        </div>
+      </header>
+
+      <main class="reveal-layout">
+        <!-- 左2.1：大画板（最终结果展示） -->
+        <div class="reveal-canvas-area card">
+          <div id="reveal-board" class="reveal-board">
+            <img id="reveal-image" class="reveal-image" />
+            <div id="reveal-word" class="reveal-word"></div>
+          </div>
+        </div>
+
+        <!-- 右2.1：整个接龙过程 -->
+        <div class="reveal-side">
+          <div class="card steps-card">
+            <h3>这一条接龙的过程</h3>
+            <div id="reveal-steps-list" class="steps-list"></div>
+          </div>
+
+         <!-- 右2.2：投票区 -->
+          <div class="card vote-card">
+            <h3>本条接龙评判</h3>
+            <p>整体上看，这条接龙是否成功传达了原始意思？</p>
+            <div class="vote-buttons">
+              <button id="btn-vote-ok" class="btn primary wide">
+                √ 合理
+              </button>
+              <button id="btn-vote-bad" class="btn secondary wide">
+                × 走偏了
+              </button>
+            </div>
+            <div id="vote-result" class="vote-result">
+              等待大家投票...
+            </div>
+            <button id="btn-next-chain" class="btn primary wide" disabled>
+              下一条接龙 ▶
+            </button>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>
