@@ -1,0 +1,69 @@
+<svg width="1120" height="260" viewBox="0 0 1120 260" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .px{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+    .t{font-size:56px;font-weight:900;fill:#E5E7EB;}
+    .s{font-size:18px;font-weight:700;fill:#9CA3AF;}
+    .stroke{stroke:#E5E7EB;stroke-width:4;stroke-linejoin:miter;shape-rendering:crispEdges;}
+    .chipText{font-size:14px;font-weight:900;fill:#0B1020;}
+    .btnText{font-size:14px;font-weight:900;fill:#0B1020;}
+  </style>
+
+  <!-- UI panel (pixel) -->
+  <g transform="translate(32,34)">
+    <rect x="0" y="0" width="1056" height="192" rx="0" fill="#0B1220" class="stroke"/>
+
+    <!-- top bar -->
+    <rect x="0" y="0" width="1056" height="42" fill="#111827" class="stroke"/>
+    <text x="18" y="28" class="px s">GAME MENU</text>
+
+    <!-- sticker chips -->
+    <g transform="translate(760,10)">
+      <rect x="0" y="0" width="96" height="22" fill="#FBBF24" class="stroke"/>
+      <text x="48" y="16" text-anchor="middle" class="px chipText">CHAIN</text>
+      <rect x="110" y="0" width="112" height="22" fill="#34D399" class="stroke"/>
+      <text x="166" y="16" text-anchor="middle" class="px chipText">MULTI</text>
+      <rect x="236" y="0" width="128" height="22" fill="#60A5FA" class="stroke"/>
+      <text x="300" y="16" text-anchor="middle" class="px chipText">GUESS+DRAW</text>
+    </g>
+
+    <!-- left pixel icon block -->
+    <g transform="translate(24,64)">
+      <!-- icon frame -->
+      <rect x="0" y="0" width="144" height="104" fill="#0F172A" class="stroke"/>
+      <!-- pixel art: chat bubble -->
+      <g transform="translate(18,18)" shape-rendering="crispEdges">
+        <rect x="0" y="0" width="64" height="36" fill="#1D4ED8" class="stroke"/>
+        <rect x="12" y="36" width="12" height="12" fill="#1D4ED8" class="stroke"/>
+        <text x="32" y="26" text-anchor="middle" class="px" font-size="18" font-weight="900" fill="#E5E7EB">?</text>
+      </g>
+      <!-- pixel art: pencil -->
+      <g transform="translate(86,60)" shape-rendering="crispEdges">
+        <rect x="0" y="0" width="44" height="12" fill="#FB7185" class="stroke"/>
+        <rect x="44" y="0" width="16" height="12" fill="#CBD5E1" class="stroke"/>
+        <rect x="52" y="4" width="4" height="4" fill="#0B1020"/>
+      </g>
+
+      <!-- little buttons -->
+      <g transform="translate(0,112)">
+        <rect x="0" y="0" width="144" height="26" fill="#111827" class="stroke"/>
+        <circle cx="18" cy="13" r="6" fill="#34D399" class="stroke"/>
+        <circle cx="42" cy="13" r="6" fill="#FBBF24" class="stroke"/>
+        <circle cx="66" cy="13" r="6" fill="#60A5FA" class="stroke"/>
+        <text x="120" y="18" text-anchor="end" class="px" font-size="12" font-weight="900" fill="#9CA3AF">v1.0</text>
+      </g>
+    </g>
+
+    <!-- main title -->
+    <text x="204" y="122" class="px t">GUESS &amp; DRAW</text>
+    <text x="206" y="152" class="px s">chain game mode: draw → guess → pass</text>
+
+    <!-- right side: pixel buttons -->
+    <g transform="translate(824,112)">
+      <rect x="0" y="0" width="208" height="40" fill="#34D399" class="stroke"/>
+      <text x="104" y="26" text-anchor="middle" class="px btnText">START</text>
+
+      <rect x="0" y="52" width="208" height="40" fill="#FBBF24" class="stroke"/>
+      <text x="104" y="78" text-anchor="middle" class="px btnText">HOW TO PLAY</text>
+    </g>
+  </g>
+</svg>
