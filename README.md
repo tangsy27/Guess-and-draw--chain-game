@@ -191,5 +191,5 @@ Example `.env`
 
 ## Contributors
 
-- Backend Engineer:
-- Frontend Engineer:
+- Backend Engineer:LIChenyu,MiXinran,ZengYuting
+- Frontend Engineer:TangShuoyan
