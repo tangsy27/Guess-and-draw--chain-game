@@ -14,14 +14,16 @@
 
 ## Technology Stack
 Frontend:
-- React.js
+- JavaScript / CSS
 - WebSocket
 - HTML5 Canvas
 
 Backend:
 - FastAPI
+- Python
 - WebSocket
 - OpenAI API
+- asyncio
 
 ## System Architecture
 ### Main Frontend Components
